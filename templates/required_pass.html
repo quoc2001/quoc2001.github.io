@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>EDA-STA Support</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/style/styles.css">
+    <link rel="stylesheet" href="../static/style/login.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style></style>
+</head>
+
+<body>
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+        <div class="w3-bar w3-blue-white w3-card" id="myNavbar">
+            <a href="#home" class="w3-bar-img">
+                <img class="w3-wide"
+                    src="https://www.renesas.com/themes/idt8/src/components/header/images/header-sets/pride/header-w.svg?header_set=1&ts=1629138828;ts=1629138828">
+            </a>
+            <!-- Right-sided navbar links -->
+            <div class="w3-right w3-hide-small">
+                <a href="/request_mem" class="w3-bar-item w3-button w3-text-white"><i class="fa-solid fa-backward"></i>
+                    GO BACK</a>
+            </div>
+
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+                onclick="w3_open()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+    <!-- <div class="content"> -->
+    <div class="container">
+        <h2>LOGIN FORM ADMIN</h2>
+        <h5>Go to the next page to approve</h5>
+        <form action="/send_otp_admin" method="post">
+            <label for="email_admin">Email:</label>
+            <input type="email" id="email_admin" name="email_admin" required>
+            <button type="submit">Send OTP</button>
+        </form>
+        {% if message_mail_admin %}
+        <p class="message-success">{{ message_mail_admin }}</p>
+        {% elif error_mail_admin %}
+        <p class="message-error">{{ error_mail_admin }}</p>
+        {% elif warning_mail_admin %}
+        <p class="message-error">{{ warning_mail_admin }}</p>
+        {% endif %}
+        <form action="/verify_otp_admin" method="post">
+            <label for="otp_admin">OTP:</label>
+            <input type="text" id="otp_admin" name="otp_admin" required>
+            <button type="submit">Verify OTP</button>
+        </form>
+        {% if message_admin %}
+        <p></p>
+        {% elif error_admin %}
+        <p class="message-error">{{ error_admin }}</p>
+        {% endif %}
+    </div>
+    <!-- </div> -->
+    <footer class="footer">
+        <a>© The website developed by QuocDuong.</a>
+    </footer>
+
+</body>
+
+</html>

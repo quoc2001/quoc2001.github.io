@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="../static/style/styles.css">
+    <link rel="stylesheet" href="../static/style/request_mem.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style></style>
+</head>
+
+<body>
+    <div class="w3-top">
+        <div class="w3-bar w3-blue-white w3-card" id="myNavbar">
+            <a href="/" class="w3-bar-img">
+                <img class="w3-wide"
+                    src="https://www.renesas.com/themes/idt8/src/components/header/images/header-sets/pride/header-w.svg?header_set=1&ts=1629138828;ts=1629138828">
+            </a>
+            <!-- Right-sided navbar links -->
+            <div class="w3-right w3-hide-small">
+                <a href="/request_mem" class="w3-bar-item w3-button w3-text-white"><i class="fa-solid fa-backward"></i> GO BACK</a>
+                <a href="/logout" class="w3-bar-item w3-button w3-text-white"><i class="fa-solid fa-right-from-bracket"></i> LOG OUT</a>
+            </div>
+
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+                onclick="w3_open()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+    <div>
+        <h1>Admin Panel</h1>
+        <h2>Pending Users</h2>
+        {% if pending_users %}
+        <form method="POST" action="/admin">
+            <table>
+                <tr>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Team</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+                {% for users in pending_users %}
+                <tr>
+                    <td>{{ users.user_email }}</td>
+                    <td>{{ users.user_name }}</td>
+                    <td>{{ users.user_team }}</td>
+                    <td>{{ users.registration_date }}</td>
+                    <td>
+                        <input type="hidden" name="user_email" value="{{ users.user_email }}">
+                        <input type="hidden" name="user_name" value="{{ users.user_name }}">
+                        <input type="hidden" name="user_name" value="{{ users.user_team }}">
+                        <input type="hidden" name="user_name" value="{{ users.registration_date }}">
+                        <button type="submit" name="action" value="approve_user">Approve</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+        {% else %}
+        <p>No pending users.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>

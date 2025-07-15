@@ -113,9 +113,9 @@
             min-height: 80vh;
         }
 
-        /* .hero-content {
+        .hero-content {
             padding: 2rem;
-        } */
+        }
 
         .hero-badge {
             background: #bbffbb;
@@ -274,6 +274,19 @@
             .logo-text {
                 font-size: 20px;
             }
+            .get-in-touch {
+                font-weight: 400;
+            }
+
+            .hero-image {
+                transform: scale(0.6); /* 60% kích thước gốc */
+            }
+
+            .floating-element:nth-child(3) {
+                bottom: 60%;
+                left: 80%;
+            }
+
         }
 
         @media (max-width: 480px) {
@@ -293,6 +306,20 @@
     
             .logo-text {
                 font-size: 16px;
+            }
+
+            .get-in-touch {
+                font-weight: 200;
+            }
+
+            .hero-image {
+                transform: scale(0.2); /* 60% kích thước gốc */
+                transform-origin: center;
+            }
+
+            .floating-element:nth-child(3) {
+                bottom: 50%;
+                left: 80%;
             }
         }
 

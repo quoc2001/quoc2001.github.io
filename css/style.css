@@ -264,6 +264,16 @@
             .nav-links {
                 display: none;
             }
+
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 15px;
+            }
+    
+            .logo-text {
+                font-size: 20px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -273,6 +283,16 @@
             }
             .hero-title {
                 font-size: 1.1rem;
+            }
+
+            .logo-icon {
+                width: 20px;
+                height: 20px;
+                font-size: 14px;
+            }
+    
+            .logo-text {
+                font-size: 16px;
             }
         }
 

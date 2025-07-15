@@ -313,13 +313,16 @@
             }
 
             .hero-image {
-                transform: scale(0.6); /* 60% kích thước gốc */
+                transform: scale(0.8); /* 60% kích thước gốc */
                 transform-origin: center;
             }
 
             .floating-element:nth-child(3) {
                 bottom: 50%;
                 left: 80%;
+            }
+            .hero-content {
+                padding: 0;
             }
         }
 

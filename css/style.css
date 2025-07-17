@@ -103,8 +103,8 @@ nav {
 /* Text Animation Classes */
 .text-slide-up {
     opacity: 0;
-    transform: translateY(50px);
-    transition: all 1.5s ease-out;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
 }
 
 .text-slide-up.animated {
@@ -113,10 +113,10 @@ nav {
 }
 
 .text-slide-up.delay-1 { transition-delay: 0.2s; }
-.text-slide-up.delay-2 { transition-delay: 0.4s; }
-.text-slide-up.delay-3 { transition-delay: 0.6s; }
-.text-slide-up.delay-4 { transition-delay: 0.8s; }
-.text-slide-up.delay-5 { transition-delay: 1.0s; }
+.text-slide-up.delay-2 { transition-delay: 0.3s; }
+.text-slide-up.delay-3 { transition-delay: 0.4s; }
+.text-slide-up.delay-4 { transition-delay: 0.5s; }
+.text-slide-up.delay-5 { transition-delay: 0.6s; }
 
 
 
@@ -261,6 +261,7 @@ main {
     font-size: 1.2rem;
     color: #4a5568;
     line-height: 1.6;
+    text-align: justify;
     max-width: 800px;
     margin: 0 auto 3rem;
 }
@@ -301,6 +302,8 @@ main {
 .work-card-description {
     color: #4a5568;
     line-height: 1.6;
+    text-align: justify;
+    /* font-size: 1rem; */
 }
 
 /* Blog Section */

@@ -353,22 +353,22 @@
 </head>
 <body>
     <a href="javascript:history.back()" class="back-button">
-        ← Quay lại
+        ← Go back
     </a>
     
     <div class="container">
         <div class="header">
-            <h1>📊 Tính tổng hoa hồng</h1>
-            <p>Công cụ tính toán hoa hồng từ file Excel nhanh chóng và chính xác</p>
+            <h1>📊 Commission Calculator</h1>
+            <p>The tool calculates commission from Excel file</p>
         </div>
         
         <div class="content">
             <div class="upload-area" onclick="document.getElementById('fileInput').click()">
                 <div class="upload-icon">📁</div>
-                <div class="upload-text">Kéo thả file Excel vào đây</div>
+                <div class="upload-text">Drag and drop Excel files here</div>
                 <div class="upload-subtext">
-                    hoặc click để chọn file<br>
-                    <small>Hỗ trợ: .xlsx, .xls, .csv (tối đa 10MB)</small>
+                    hoặc click to choose file<br>
+                    <small>Support: .xlsx, .xls, .csv (maximum 10MB)</small>
                 </div>
             </div>
             
@@ -376,20 +376,20 @@
             
             <div class="loading" id="loading">
                 <div class="loading-spinner"></div>
-                <div>Đang xử lý file, vui lòng đợi...</div>
+                <div>Analyzing file, please wait...</div>
             </div>
             
             <div class="error" id="errorMsg"></div>
             
             <div class="column-selector" id="columnSelector">
-                <label for="columnSelect">Chọn cột chứa hoa hồng:</label>
+                <label for="columnSelect">Select column with commission:</label>
                 <select id="columnSelect">
-                    <option value="">-- Chọn cột --</option>
+                    <option value="">-- Choose column --</option>
                 </select>
             </div>
             
             <div class="result" id="result">
-                <h2>💰 Tổng hoa hồng</h2>
+                <h2>💰 Total</h2>
                 <div class="amount" id="totalAmount">0</div>
                 <div style="font-size: 1.2em; opacity: 0.9;">VND</div>
             </div>
@@ -397,19 +397,19 @@
             <div class="stats" id="stats">
                 <div class="stat-box">
                     <div class="stat-value" id="recordCount">0</div>
-                    <div class="stat-label">Số bản ghi</div>
+                    <div class="stat-label">Record Count</div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-value" id="avgAmount">0</div>
-                    <div class="stat-label">Hoa hồng trung bình</div>
+                    <div class="stat-label">Average Amount</div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-value" id="maxAmount">0</div>
-                    <div class="stat-label">Hoa hồng cao nhất</div>
+                    <div class="stat-label">Maximum Amount</div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-value" id="minAmount">0</div>
-                    <div class="stat-label">Hoa hồng thấp nhất</div>
+                    <div class="stat-label">Minimum Amount</div>
                 </div>
             </div>
             
@@ -459,7 +459,7 @@
         function handleFile(file) {
             // Kiểm tra kích thước file (10MB)
             if (file.size > 10 * 1024 * 1024) {
-                showError('File quá lớn! Vui lòng chọn file nhỏ hơn 10MB.');
+                showError('File is large! Please choose file less than 10MB.');
                 return;
             }
             
@@ -468,7 +468,7 @@
                               'text/csv'];
             
             if (!validTypes.includes(file.type) && !file.name.match(/\.(xlsx|xls|csv)$/i)) {
-                showError('Vui lòng chọn file Excel (.xlsx, .xls) hoặc CSV (.csv)');
+                showError('Please choose file Excel (.xlsx, .xls) or CSV (.csv)');
                 return;
             }
             
@@ -486,7 +486,7 @@
                     const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
                     
                     if (jsonData.length < 2) {
-                        showError('File không có dữ liệu hoặc chỉ có header');
+                        showError('File contains no data or only a header');
                         showLoading(false);
                         return;
                     }
@@ -499,7 +499,7 @@
                     showLoading(false);
                     
                 } catch (error) {
-                    showError('Lỗi khi đọc file: ' + error.message);
+                    showError('Error in read file: ' + error.message);
                     showLoading(false);
                 }
             };
@@ -508,12 +508,12 @@
         
         function populateColumnSelector() {
             const select = document.getElementById('columnSelect');
-            select.innerHTML = '<option value="">-- Chọn cột --</option>';
+            select.innerHTML = '<option value="">-- Choose column --</option>';
             
             currentHeaders.forEach((header, index) => {
                 const option = document.createElement('option');
                 option.value = index;
-                option.textContent = `${header} (Cột ${index + 1})`;
+                option.textContent = `${header} (Column ${index + 1})`;
                 select.appendChild(option);
             });
             
@@ -539,7 +539,7 @@
             }).filter(value => value > 0);
             
             if (commissionData.length === 0) {
-                showError('Không tìm thấy dữ liệu số hợp lệ trong cột đã chọn');
+                showError('No valid numeric data found in the selected column');
                 return;
             }
             
@@ -610,7 +610,7 @@
             if (currentData.length > 100) {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td colspan="${currentHeaders.length + 1}" style="text-align: center; font-style: italic; color: #666;">
-                    ... và ${currentData.length - 100} dòng khác (chỉ hiển thị 100 dòng đầu)
+                    ... and ${currentData.length - 100} other lines (only show first 100 lines)
                 </td>`;
                 tableBody.appendChild(tr);
             }

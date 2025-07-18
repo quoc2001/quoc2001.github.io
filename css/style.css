@@ -765,17 +765,6 @@ main {
         grid-template-columns: 1fr;
     }
 
-    /* .contact-links {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .contact-link {
-        width: 100%;
-        max-width: 300px;
-        justify-content: center;
-    } */
-
     .contact-links {
         flex-direction: row;
         justify-content: center;
@@ -1097,17 +1086,6 @@ footer {
 
 /* Event Section Styles */
 
-/* .event-section {
-    padding: 50px 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    position: relative;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
-    border-radius: 30px;
-    margin: 2rem auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-} */
-
 .event-section {
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(15px);
@@ -1118,16 +1096,32 @@ footer {
     max-width: 1400px;
 }
 
+.event-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 0.9;
+    z-index: 1;
+} 
+
+.event-container {
+    position: relative;
+    z-index: 2;
+}
 .event-container {
     max-width: 900px;
     margin: 0 auto;
     padding: 4rem 2rem;
+    height: fit-content;
 }
 
 .event-title {
     color: #17273d;
     text-align: center;
-    /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); */
     font-size: 2.5rem;
     color: #17273d;
     margin-bottom: 2rem;
@@ -1289,7 +1283,7 @@ footer {
 
 @media (max-width: 480px) {
     .event-container {
-        padding: 0 15px;
+        padding: 4rem 2rem;
     }
     
     .event-timeline::before {

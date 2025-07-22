@@ -825,7 +825,7 @@ main {
     }
 
     .hero-content {
-        padding: 1rem;
+        padding: 3rem;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -931,7 +931,7 @@ main {
     }
 
     .hero-content {
-        padding: 0.5rem;
+        padding: 3rem;
     }
 
     .hero-badge {
@@ -1447,5 +1447,21 @@ footer {
     
     .event-title {
         font-size: 1.6rem;
+    }
+
+    .footer-bottom {
+        font-size: 0.75rem;
+    }
+    
+    .footer-heart {
+        font-size: 1.0rem;
+    }
+    
+    .footer-year {
+        font-size: 0.75rem;
+    }
+    
+    .footer-feature {
+        font-size: 0.75rem;
     }
 }

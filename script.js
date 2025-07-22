@@ -103,136 +103,154 @@ window.addEventListener('load', () => {
 
 // Set Language in page
 let currentLanguage = 'en';
-        
-        const translations = {
-            en: {
-                'logo-text': 'Quoc Duong',
-                'name': 'QUOC',
-                'nav-about': 'About Me',
-                'nav-work': 'Work',
-                'nav-blog': 'Blog',
-                'nav-contact': 'Contact me',
-                'hero-title': 'Hardware Engineer',
-                'hero-description': 'Hey, I\'m updating this page.<br />Coming soon ...',
-                'hero-cta': 'Get in touch',
-                'event-title': 'My Journey',
-                'event-subtitle': 'Education & Career Timeline',
-                'education': 'Education',
-                'event-name': 'HCMC University of Technology and Education',
-                'event-major': 'Electronics and Telecommunications',
-                'worker': 'Work',
-                'event-company-name': 'Semiconductor company',
-                'work-text': 'My work',
-                'content-1': 'What is a Physical Design Engineer? <br/>A physical design engineer is a specialized engineer who focuses on the physical implementation of electronic circuits, particularly within integrated circuits (ICs) or microchips',
-                'content-2': 'Creating optimized floorplans and macro placements to ensure efficient routing, minimal congestion, and balanced timing paths.',
-                'content-3': 'Working with STA tools to fix timing violations, reduce hold/slack issues, and meet setup constraints under process variations.',
-                'content-4': 'Ensuring clean layouts that pass Design Rule Checks (DRC) and Layout vs Schematic (LVS) verification for tapeout readiness.',
-                'blog-description': 'Some newspapers about semiconductor field',
-                'read-more': 'Read more',
-                'aff-link1': 'Click here',
-                'aff-link2': 'Click here',
-                'aff-link3': 'Click here',
-                'aff-link4': 'Click here',
-                'contact-title': 'Get In Touch',
-                'contact-description': 'Please contact me via Email/LinkedIn or Facebook',
-                'affiliate-title': 'Affiliate',
-                'affiliate-description': 'You can buy something at here 🍻',
-            },
-            vi: {
-                'logo-text': 'Quốc Dương',
-                'name': 'QUỐC',
-                'nav-about': 'Về Tôi',
-                'nav-work': 'Công Việc',
-                'nav-blog': 'Blog',
-                'nav-contact': 'Liên Hệ',
-                'hero-title': 'Kỹ sư Phần cứng',
-                'hero-description': 'Xin chào, dữ liệu đang cập nhật.',
-                'hero-cta': 'Liên hệ',
-                'event-title': 'Sơ lược về tôi',
-                'event-subtitle': 'Học vấn & Nghề nghiệp',
-                'education': 'Học vấn',
-                'event-name': 'Trường Đại học Sư phạm Kỹ thuật TP. HCM',
-                'event-major': 'Điện tử-viễn thông',
-                'worker': 'Công việc',
-                'event-company-name': 'Công ty thiết kế vi mạch',
-                'work-text': 'Công việc của tôi',
-                'content-1': 'What is a Physical Design Engineer? <br/>A physical design engineer is a specialized engineer who focuses on the physical implementation of electronic circuits, particularly within integrated circuits (ICs) or microchips',
-                'content-2': 'Creating optimized floorplans and macro placements to ensure efficient routing, minimal congestion, and balanced timing paths.',
-                'content-3': 'Working with STA tools to fix timing violations, reduce hold/slack issues, and meet setup constraints under process variations.',
-                'content-4': 'Ensuring clean layouts that pass Design Rule Checks (DRC) and Layout vs Schematic (LVS) verification for tapeout readiness.',
-                'blog-description': 'Một số bài báo về mảng bán dẫn',
-                'read-more': 'Đọc thêm',
-                'contact-title': 'Liên hệ',
-                'aff-link1': 'Nhấn vào đây',
-                'aff-link2': 'Nhấn vào đây',
-                'aff-link3': 'Nhấn vào đây',
-                'aff-link4': 'Nhấn vào đây',
-                'contact-description': 'Vui lòng liên hệ tôi qua Email/LinkedIn hoặc Facebook',
-                'affiliate-title': 'Tiếp thị liên kết',
-                'affiliate-description': 'Bạn có thể mua gì đó tại đây 🍻',
-            }
-        };
 
-        function toggleLanguage() {
-            const dropdown = document.getElementById('languageDropdown');
-            dropdown.classList.toggle('show');
-        }
+const translations = {
+    en: {
+        'logo-text': 'Quoc Duong',
+        'name': 'QUOC',
+        'nav-about': 'About Me',
+        'nav-work': 'Work',
+        'nav-blog': 'Blog',
+        'nav-contact': 'Contact me',
+        'hero-title': 'Hardware Engineer',
+        'hero-description': 'Hey, I\'m updating this page.<br />Coming soon ...',
+        'hero-cta': 'Get in touch',
+        'event-title': 'My Journey',
+        'event-subtitle': 'Education & Career Timeline',
+        'education': 'Education',
+        'event-name': 'HCMC University of Technology and Education',
+        'event-major': 'Electronics and Telecommunications',
+        'worker': 'Work',
+        'event-company-name': 'Semiconductor company',
+        'work-text': 'My work',
+        'content-1': 'What is a Physical Design Engineer? <br/>A physical design engineer is a specialized engineer who focuses on the physical implementation of electronic circuits, particularly within integrated circuits (ICs) or microchips',
+        'content-2': 'Creating optimized floorplans and macro placements to ensure efficient routing, minimal congestion, and balanced timing paths.',
+        'content-3': 'Working with STA tools to fix timing violations, reduce hold/slack issues, and meet setup constraints under process variations.',
+        'content-4': 'Ensuring clean layouts that pass Design Rule Checks (DRC) and Layout vs Schematic (LVS) verification for tapeout readiness.',
+        'blog-description': 'Some newspapers about semiconductor field',
+        'read-more': 'Read more',
+        'aff-link1': 'Click here',
+        'aff-link2': 'Click here',
+        'aff-link3': 'Click here',
+        'aff-link4': 'Click here',
+        'contact-title': 'Get In Touch',
+        'contact-description': 'Please contact me via Email/LinkedIn or Facebook',
+        'affiliate-title': 'Affiliate',
+        'affiliate-description': 'You can buy something at here 🍻',
+    },
+    vi: {
+        'logo-text': 'Quốc Dương',
+        'name': 'QUỐC',
+        'nav-about': 'Về Tôi',
+        'nav-work': 'Công Việc',
+        'nav-blog': 'Blog',
+        'nav-contact': 'Liên Hệ',
+        'hero-title': 'Kỹ sư Phần cứng',
+        'hero-description': 'Xin chào, dữ liệu đang cập nhật.',
+        'hero-cta': 'Liên hệ',
+        'event-title': 'Sơ lược về tôi',
+        'event-subtitle': 'Học vấn & Nghề nghiệp',
+        'education': 'Học vấn',
+        'event-name': 'Trường Đại học Sư phạm Kỹ thuật TP. HCM',
+        'event-major': 'Điện tử-viễn thông',
+        'worker': 'Công việc',
+        'event-company-name': 'Công ty thiết kế vi mạch',
+        'work-text': 'Công việc của tôi',
+        'content-1': 'What is a Physical Design Engineer? <br/>A physical design engineer is a specialized engineer who focuses on the physical implementation of electronic circuits, particularly within integrated circuits (ICs) or microchips',
+        'content-2': 'Creating optimized floorplans and macro placements to ensure efficient routing, minimal congestion, and balanced timing paths.',
+        'content-3': 'Working with STA tools to fix timing violations, reduce hold/slack issues, and meet setup constraints under process variations.',
+        'content-4': 'Ensuring clean layouts that pass Design Rule Checks (DRC) and Layout vs Schematic (LVS) verification for tapeout readiness.',
+        'blog-description': 'Một số bài báo về mảng bán dẫn',
+        'read-more': 'Đọc thêm',
+        'contact-title': 'Liên hệ',
+        'aff-link1': 'Nhấn vào đây',
+        'aff-link2': 'Nhấn vào đây',
+        'aff-link3': 'Nhấn vào đây',
+        'aff-link4': 'Nhấn vào đây',
+        'contact-description': 'Vui lòng liên hệ tôi qua Email/LinkedIn hoặc Facebook',
+        'affiliate-title': 'Tiếp thị liên kết',
+        'affiliate-description': 'Bạn có thể mua gì đó tại đây 🍻',
+    }
+};
 
-        function setLanguage(lang) {
-            currentLanguage = lang;
-            
-            // Update all text elements
-            Object.keys(translations[lang]).forEach(key => {
-                const element = document.getElementById(key);
-                if (element) {
-                    if (key === 'hero-description') {
-                        element.innerHTML = translations[lang][key];
-                    } else {
-                        element.textContent = translations[lang][key];
-                    }
-                }
-            });
+function toggleLanguage() {
+    const dropdown = document.getElementById('languageDropdown');
+    dropdown.classList.toggle('show');
+}
 
-            // Update current language display
-            const currentLang = document.getElementById('current-lang');
-            const currentFlag = document.getElementById('current-flag');
-            
-            if (lang === 'en') {
-                currentLang.textContent = 'EN';
-                currentFlag.src = 'https://flagcdn.com/w40/gb.png';
-                currentFlag.alt = 'United Kingdom';
+function setLanguage(lang) {
+    currentLanguage = lang;
+
+    // Update all text elements
+    Object.keys(translations[lang]).forEach(key => {
+        const element = document.getElementById(key);
+        if (element) {
+            if (key === 'hero-description') {
+                element.innerHTML = translations[lang][key];
             } else {
-                currentLang.textContent = 'VI';
-                currentFlag.src = 'https://flagcdn.com/w40/vn.png';
-                currentFlag.alt = 'Việt Nam';
+                element.textContent = translations[lang][key];
             }
-
-            // Update active state in dropdown
-            const options = document.querySelectorAll('.language-option');
-            options.forEach(option => {
-                option.classList.remove('active');
-            });
-            
-            if (lang === 'en') {
-                options[0].classList.add('active');
-            } else {
-                options[1].classList.add('active');
-            }
-
-            // Update HTML lang attribute
-            document.documentElement.lang = lang;
-            
-            // Close dropdown
-            document.getElementById('languageDropdown').classList.remove('show');
         }
+    });
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const selector = document.querySelector('.language-selector');
-            if (!selector.contains(event.target)) {
-                document.getElementById('languageDropdown').classList.remove('show');
-            }
-        });
+    // Update current language display
+    const currentLang = document.getElementById('current-lang');
+    const currentFlag = document.getElementById('current-flag');
 
-        // Initialize with English
-        setLanguage('en');
+    if (lang === 'en') {
+        currentLang.textContent = 'EN';
+        currentFlag.src = 'https://flagcdn.com/w40/gb.png';
+        currentFlag.alt = 'United Kingdom';
+    } else {
+        currentLang.textContent = 'VI';
+        currentFlag.src = 'https://flagcdn.com/w40/vn.png';
+        currentFlag.alt = 'Việt Nam';
+    }
+
+    // Update active state in dropdown
+    const options = document.querySelectorAll('.language-option');
+    options.forEach(option => {
+        option.classList.remove('active');
+    });
+
+    if (lang === 'en') {
+        options[0].classList.add('active');
+    } else {
+        options[1].classList.add('active');
+    }
+
+    // Update HTML lang attribute
+    document.documentElement.lang = lang;
+
+    // Close dropdown
+    document.getElementById('languageDropdown').classList.remove('show');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function (event) {
+    const selector = document.querySelector('.language-selector');
+    if (!selector.contains(event.target)) {
+        document.getElementById('languageDropdown').classList.remove('show');
+    }
+});
+
+// Initialize with English
+setLanguage('en');
+
+//Back to TOP//
+const backToTopBtn = document.getElementById('backToTopBtn');
+
+window.addEventListener('scroll', function () {
+    if (window.pageYOffset > 300) {
+        backToTopBtn.classList.add('show');
+    } else {
+        backToTopBtn.classList.remove('show');
+    }
+});
+
+backToTopBtn.addEventListener('click', function () {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});

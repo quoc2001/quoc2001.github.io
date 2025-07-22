@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commission Calculator</title>
+    <title>Tính tổng hoa hồng từ Excel</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         * {
@@ -519,7 +519,8 @@
             
             // Tự động chọn cột cuối cùng
             if (currentHeaders.length > 0) {
-                select.value = currentHeaders.length - 1;
+                // select.value = currentHeaders.length - 1;
+                select.value = 31;
                 calculateCommission();
             }
         }

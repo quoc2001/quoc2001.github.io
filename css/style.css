@@ -15,7 +15,7 @@ body {
 .container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 50px;
 }
 html {
     scroll-padding-top: 80px;
@@ -74,13 +74,13 @@ nav {
 .nav-links a {
     color: #14397e;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 550;
     transition: opacity 0.3s;
 }
 
 .nav-links a:hover {
     opacity: 0.7;
-    font-weight: bold;
+    font-weight: 800;
     font-size: 600;
     color: #000;
 }
@@ -195,7 +195,6 @@ nav {
 }
 
 .language-option.active {
-    /* background: linear-gradient(45deg, #667eea, #764ba2); */
     background: linear-gradient(75deg, #6EE7B7, #3B82F6);
     color: white;
 }
@@ -206,16 +205,6 @@ nav {
     border-radius: 2px;
     display: inline-block;
 }
-
-/* .flag-en {
-    background: linear-gradient(to bottom, #012169 33%, white 33%, white 66%, #C8102E 66%);
-}
-
-.flag-vi {
-    background: linear-gradient(to bottom, #da020e 50%, #ff0 50%);
-} */
-
-
 /* end */
 
 .get-in-touch {
@@ -327,31 +316,31 @@ main {
     margin-bottom: 3rem;
 }
 
-/* Rainbow Background - Khuyên dùng */
-.rainbow-button {
+/* Rainbow Background */
+/* .rainbow-pulse {
     background: linear-gradient(45deg, 
-        #ff0000, #ff8000, #ffff00, #80ff00, 
-        #00ff00, #00ff80, #00ffff, #0080ff,
-        #0000ff, #8000ff, #ff00ff, #ff0080);
+    #ff0000, #ff8000, #ffff00, #80ff00, 
+    #00ff00, #00ff80, #00ffff, #0080ff,
+    #0000ff, #8000ff, #ff00ff, #ff0080);
     background-size: 400% 400%;
     animation: rainbowMove 7s ease-in-out infinite;
     border: none;
     padding: 15px 30px;
     border-radius: 50px;
-    color: white;
+    color: black;
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
     border: 2px solid rgba(0, 0, 0, 0.3);
     gap: 10px;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(200px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     display: inline-flex;
     align-items: center;
     gap: 10px;
     transition: all 0.3s
 }
-.rainbow-button:hover {
+.rainbow-pulse:hover {
     transform: translateY(-5px);
 }
 
@@ -359,6 +348,73 @@ main {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+} */
+
+/* TEST ANIMATION */
+/* .rainbow-pulse {
+    background: linear-gradient(45deg, 
+        #ffb3b3, #ffccb3, #ffffb3, #ccffb3, 
+        #b3ffb3, #b3ffcc, #b3ffff, #b3ccff,
+        #b3b3ff, #ccb3ff, #ffb3ff, #ffb3cc);
+    background-size: 400% 400%;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px;
+    text-shadow: none;
+    text-decoration: none;
+    animation: rainbowMove 4s ease-in-out infinite, softPulse 3s ease-in-out infinite;
+}
+
+@keyframes softPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.2);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+} */
+
+.rainbow-pulse {
+    background: linear-gradient(45deg, 
+    #ff0000, #ff8000, #80ff00, 
+    #00ff00, #00ff80, #00ffff, #0080ff,
+    #0000ff, #8000ff, #ff00ff, #ff0080);
+    color: white;
+    background-size: 400% 400%;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    text-decoration: none;
+    animation: rainbowMove 5s ease-in-out infinite, pulse 2s ease-in-out infinite;
+}
+
+@keyframes rainbowMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+    }
 }
 
 .hero-image {
@@ -382,7 +438,7 @@ main {
 
 /* Work Section */
 .work {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(15px);
     border-radius: 30px;
     margin: 2rem auto;
@@ -553,7 +609,7 @@ main {
 
 /* Contact Section - Simplified */
 .contact {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(15px);
     border-radius: 30px;
     margin: 2rem auto;
@@ -907,7 +963,7 @@ main {
         font-weight: 400;
     }
 
-    * Hide some bubbles on mobile for better performance */ .floating-element:nth-child(n+7) {
+    /* Hide some bubbles on mobile for better performance */ .floating-element:nth-child(n+9) {
         display: none;
     }
 
@@ -987,7 +1043,7 @@ main {
     }
 
     /* Hide even more bubbles on small mobile screens */
-    .floating-element:nth-child(n+6) {
+    .floating-element:nth-child(n+7) {
         display: none;
     }
 
@@ -1100,7 +1156,7 @@ footer {
 .affiliate-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 40px;
 }
 
 .affiliate-title {
@@ -1268,9 +1324,10 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
     opacity: 0.9;
     z-index: 1;
+    border-radius: 30px;
 } 
 
 .event-container {
@@ -1282,6 +1339,9 @@ footer {
     margin: 0 auto;
     padding: 4rem 2rem;
     height: fit-content;
+    /* max-width: 800px;
+    margin: 0 auto;
+    padding: 0 50px; */
 }
 
 .event-title {
@@ -1490,7 +1550,7 @@ footer {
 /* Back to TOP */
 .back-to-top {
     position: fixed;
-    bottom: 30px;
+    bottom: 60px;
     right: 30px;
     width: 50px;
     height: 50px;

@@ -1020,7 +1020,7 @@ main {
     .hero-title,
     .work-title,
     .blog-title,
-    .contact-title,
+    .contact-title
     {
         font-size: 1.5rem;
     }
@@ -1316,6 +1316,9 @@ footer {
     
     .product-name {
         font-size: 0.85rem;
+    }
+    .affiliate-products {
+        padding-bottom: 1rem;
     }
 }
 

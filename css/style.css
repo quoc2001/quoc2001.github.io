@@ -383,7 +383,7 @@ main {
 
 .rainbow-pulse {
     background: linear-gradient(45deg, 
-    #ff0000, #ff8000, #80ff00, 
+    #ff0000, #ff8000, #ffff00, #80ff00, 
     #00ff00, #00ff80, #00ffff, #0080ff,
     #0000ff, #8000ff, #ff00ff, #ff0080);
     color: white;
@@ -409,7 +409,7 @@ main {
 @keyframes pulse {
     0%, 100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 0 0 rgb(255, 250, 210);
     }
     50% {
         transform: scale(1.05);
@@ -449,7 +449,7 @@ main {
 
 .work-content {
     text-align: center;
-    padding: 2rem 2rem;
+    padding: 1rem 2rem;
 }
 
 .work-title {
@@ -936,7 +936,8 @@ main {
     .hero-title,
     .work-title,
     .blog-title,
-    .contact-title {
+    .contact-title
+    {
         font-size: 1.8rem;
     }
 
@@ -1000,9 +1001,9 @@ main {
 }
 
 @media (max-width: 480px) {
-    /* .hero {
+    .hero {
         padding: 0 0.5rem;
-    } */
+    }
 
     .hero-content {
         padding-left: 0.5rem;
@@ -1019,7 +1020,8 @@ main {
     .hero-title,
     .work-title,
     .blog-title,
-    .contact-title {
+    .contact-title,
+    {
         font-size: 1.5rem;
     }
 
@@ -1147,10 +1149,15 @@ footer {
  .affiliate-section {
     padding: 40px 0;
     background: rgba(255, 255, 255, 0.15);
+}
+.aff {
+    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(15px);
     border-radius: 30px;
     margin: 2rem auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(159, 159, 159, 0.1);
+    width: 100%;
+    max-width: 1400px;
 }
 
 .affiliate-container {
@@ -1167,6 +1174,7 @@ footer {
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 2px;
+    /* padding-top: 1rem; */
 }
 
 .affiliate-description {
@@ -1283,6 +1291,9 @@ footer {
         padding: 6px 12px;
         font-size: 0.85rem;
     }
+    .affiliate-title {
+        font-size: 1.8rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1291,7 +1302,8 @@ footer {
     }
     
     .affiliate-title {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
+        padding-top: 1rem;
     }
     
     .affiliate-description {
@@ -1340,9 +1352,14 @@ footer {
 .event-container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 2rem 2rem;
+    padding: 1rem 2rem;
     height: fit-content;
 }
+
+/* .event-container {
+    text-align: center;
+    padding: 1rem 2rem;
+} */
 
 .event-title {
     color: #17273d;
@@ -1377,14 +1394,14 @@ footer {
     top: 0;
     bottom: 0;
     width: 3px;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
+    background: linear-gradient(to bottom, rgba(182, 182, 182, 0.8), rgba(219, 219, 219, 0.35));
     border-radius: 2px;
 }
 
 /* Event item styling */
 .event-item {
-    background: rgba(30, 64, 175, 0.3);
-    border: 2px solid rgba(58, 58, 58, 0.3);
+    background: rgba(0, 123, 255, 0.35);
+    border: 2px solid rgba(58, 58, 58, 0.5);
     border-radius: 15px;
     padding: 20px 25px;
     backdrop-filter: blur(10px);
@@ -1395,7 +1412,7 @@ footer {
 }
 
 .event-item:hover {
-    background: rgba(0, 174, 43, 0.15);
+    background: rgba(255, 106, 0, 0.35);
     border-color: rgba(255, 255, 255, 0.6);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
     transform: translateY(-5px) translateX(5px);
@@ -1508,7 +1525,7 @@ footer {
 
 @media (max-width: 480px) {
     .event-container {
-        padding: 4rem 2rem;
+        padding: 1rem 2rem;
     }
     
     .event-timeline::before {
@@ -1527,7 +1544,7 @@ footer {
     }
     
     .event-title {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
 
     .footer-bottom {
@@ -1554,7 +1571,7 @@ footer {
     right: 30px;
     width: 50px;
     height: 50px;
-    background: #5b81fd;
+    background: #5873fc;
     color: white;
     border: none;
     border-radius: 50%;
@@ -1562,7 +1579,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 72, 255, 0.3);
     transition: all 0.3s ease;
     opacity: 0;
     visibility: hidden;

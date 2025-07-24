@@ -146,7 +146,7 @@ const translations = {
         'nav-blog': 'Blog',
         'nav-contact': 'Liên Hệ',
         'hero-title': 'Kỹ sư Phần cứng',
-        'hero-description': 'Xin chào mọi người, chào mừng đến với trang cá nhân của tôi.',
+        'hero-description': 'Xin chào mọi người, chào mừng đến với trang cá nhân của tớ.',
         'hero-cta': 'Liên hệ',
         'event-title': 'Sơ Lược Về Bản Thân',
         'event-subtitle': 'Học Vấn & Nghề Nghiệp',
@@ -155,7 +155,7 @@ const translations = {
         'event-major': 'Điện tử - Viễn thông',
         'worker': 'Công Việc',
         'event-company-name': 'Công ty Thiết kế Vi mạch',
-        'work-text': 'Công việc hiện tại',
+        'work-text': 'Công Việc Hiện Tại',
         'content-1': 'What is a Physical Design Engineer? <br/>A physical design engineer is a specialized engineer who focuses on the physical implementation of electronic circuits, particularly within integrated circuits (ICs) or microchips',
         'content-2': 'Creating optimized floorplans and macro placements to ensure efficient routing, minimal congestion, and balanced timing paths.',
         'content-3': 'Working with STA tools to fix timing violations, reduce hold/slack issues, and meet setup constraints under process variations.',
@@ -167,9 +167,9 @@ const translations = {
         'aff-link2': 'Nhấn vào đây',
         'aff-link3': 'Nhấn vào đây',
         'aff-link4': 'Nhấn vào đây',
-        'contact-description': 'Vui lòng liên hệ qua Email/LinkedIn hoặc Facebook',
+        'contact-description': 'Vui lòng liên hệ với tớ qua Email/LinkedIn hoặc Facebook',
         'affiliate-title': 'Tiếp Thị Liên Kết',
-        'affiliate-description': 'Bạn có thể mua gì đó tại đây 🍻',
+        'affiliate-description': 'Bạn có thể mua gì đó tại đây nhé 🍻',
     }
 };
 

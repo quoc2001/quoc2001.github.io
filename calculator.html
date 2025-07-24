@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commission Calculator</title>
+    <link rel="stylesheet" href="css/calculator.css" />
+    <link rel="shortcut icon" href="./images/1.png" type="image/x-icon" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <a href="javascript:history.back()" class="back-button">
+        ← Go back
+    </a>
+
+    <div class="container">
+        <div class="header">
+            <h1>📊 Commission Calculator</h1>
+            <p>The tool calculates commission from Excel file</p>
+        </div>
+
+        <div class="content">
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Drag and drop Excel files here</div>
+                <div class="upload-subtext">
+                    or click to choose file<br>
+                    <small>Support: .xlsx, .xls, .csv (maximum 10MB)</small>
+                </div>
+            </div>
+
+            <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" />
+
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <div>Analyzing file, please wait...</div>
+            </div>
+
+            <div class="error" id="errorMsg"></div>
+
+            <div class="column-selector" id="columnSelector">
+                <label for="columnSelect">Select column with commission:</label>
+                <select id="columnSelect">
+                    <option value="">-- Choose column --</option>
+                </select>
+            </div>
+
+            <div class="result" id="result">
+                <h2>💰 Total</h2>
+                <div class="amount" id="totalAmount">0</div>
+                <div style="font-size: 1.2em; opacity: 0.9;">VND</div>
+            </div>
+
+            <div class="stats" id="stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="recordCount">0</div>
+                    <div class="stat-label">Record Count</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="avgAmount">0</div>
+                    <div class="stat-label">Average Amount</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="maxAmount">0</div>
+                    <div class="stat-label">Maximum Amount</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="minAmount">0</div>
+                    <div class="stat-label">Minimum Amount</div>
+                </div>
+            </div>
+
+            <div class="table-container" id="tableContainer">
+                <div class="table-wrapper">
+                    <table>
+                        <thead id="tableHead"></thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentData = [];
+        let currentHeaders = [];
+
+        // Drag and drop functionality
+        const uploadArea = document.querySelector('.upload-area');
+        const fileInput = document.getElementById('fileInput');
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            // Kiểm tra kích thước file (10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                showError('File is large! Please choose file less than 10MB.');
+                return;
+            }
+
+            const validTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'application/vnd.ms-excel',
+                'text/csv'];
+
+            if (!validTypes.includes(file.type) && !file.name.match(/\.(xlsx|xls|csv)$/i)) {
+                showError('Please choose file Excel (.xlsx, .xls) or CSV (.csv)');
+                return;
+            }
+
+            showLoading(true);
+            hideError();
+            hideResults();
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[sheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+                    if (jsonData.length < 2) {
+                        showError('File contains no data or only a header');
+                        showLoading(false);
+                        return;
+                    }
+
+                    currentHeaders = jsonData[0];
+                    currentData = jsonData.slice(1);
+
+                    populateColumnSelector();
+                    showColumnSelector(true);
+                    showLoading(false);
+
+                } catch (error) {
+                    showError('Error in read file: ' + error.message);
+                    showLoading(false);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function populateColumnSelector() {
+            const select = document.getElementById('columnSelect');
+            select.innerHTML = '<option value="">-- Choose column --</option>';
+
+            currentHeaders.forEach((header, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${header} (Column ${index + 1})`;
+                select.appendChild(option);
+            });
+
+            // Tự động chọn cột cuối cùng
+            if (currentHeaders.length > 0) {
+                // select.value = currentHeaders.length - 1;
+                select.value = 30;
+                calculateCommission();
+            }
+        }
+
+        document.getElementById('columnSelect').addEventListener('change', calculateCommission);
+
+        function calculateCommission() {
+            const selectedColumn = parseInt(document.getElementById('columnSelect').value);
+
+            if (isNaN(selectedColumn) || currentData.length === 0) {
+                return;
+            }
+
+            const commissionData = currentData.map(row => {
+                const value = row[selectedColumn];
+                return parseFloat(value) || 0;
+            }).filter(value => value > 0);
+
+            if (commissionData.length === 0) {
+                showError('No valid numeric data found in the selected column');
+                return;
+            }
+
+            const total = commissionData.reduce((sum, value) => sum + value, 0);
+            const average = total / commissionData.length;
+            const max = Math.max(...commissionData);
+            const min = Math.min(...commissionData);
+
+            // Hiển thị kết quả
+            document.getElementById('totalAmount').textContent = formatNumber(total);
+            document.getElementById('recordCount').textContent = commissionData.length;
+            document.getElementById('avgAmount').textContent = formatNumber(average);
+            document.getElementById('maxAmount').textContent = formatNumber(max);
+            document.getElementById('minAmount').textContent = formatNumber(min);
+
+            // Hiển thị bảng dữ liệu
+            displayTable(selectedColumn);
+
+            // Hiển thị các phần tử kết quả
+            showResults();
+        }
+
+        function displayTable(commissionColumn) {
+            const tableHead = document.getElementById('tableHead');
+            const tableBody = document.getElementById('tableBody');
+
+            // Tạo header
+            const headerRow = document.createElement('tr');
+            headerRow.innerHTML = '<th>STT</th>';
+            currentHeaders.forEach((header, index) => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                if (index === commissionColumn) {
+                    th.classList.add('highlight');
+                }
+                headerRow.appendChild(th);
+            });
+            tableHead.innerHTML = '';
+            tableHead.appendChild(headerRow);
+
+            // Tạo body (giới hạn 100 dòng đầu để tối ưu performance)
+            tableBody.innerHTML = '';
+            const maxRows = Math.min(currentData.length, 100);
+
+            for (let i = 0; i < maxRows; i++) {
+                const row = currentData[i];
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${i + 1}</td>`;
+
+                currentHeaders.forEach((header, colIndex) => {
+                    const td = document.createElement('td');
+                    const value = row[colIndex] || '';
+
+                    if (colIndex === commissionColumn && !isNaN(parseFloat(value))) {
+                        td.textContent = formatNumber(parseFloat(value));
+                        td.classList.add('highlight');
+                    } else {
+                        td.textContent = value;
+                    }
+
+                    tr.appendChild(td);
+                });
+
+                tableBody.appendChild(tr);
+            }
+
+            // Thêm thông báo nếu có nhiều hơn 100 dòng
+            if (currentData.length > 100) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="${currentHeaders.length + 1}" style="text-align: center; font-style: italic; color: #666;">
+                    ... and ${currentData.length - 100} other lines (only show first 100 lines)
+                </td>`;
+                tableBody.appendChild(tr);
+            }
+        }
+
+        function formatNumber(num) {
+            return new Intl.NumberFormat('vi-VN').format(Math.round(num));
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideError() {
+            document.getElementById('errorMsg').style.display = 'none';
+        }
+
+        function showColumnSelector(show) {
+            document.getElementById('columnSelector').style.display = show ? 'block' : 'none';
+        }
+
+        function showResults() {
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('stats').style.display = 'grid';
+            document.getElementById('tableContainer').style.display = 'block';
+        }
+
+        function hideResults() {
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('stats').style.display = 'none';
+            document.getElementById('tableContainer').style.display = 'none';
+            document.getElementById('columnSelector').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

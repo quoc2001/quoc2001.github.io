@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/shopee.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Shopee Affiliate Link Generator</title>
+</head>
+<body>
+    <a href="index.html" class="back-button">
+        <i class="fa-solid fa-backward"></i>
+        <span class="contact-text">Go back</span>
+    </a>
+    <div class="container">
+        <h1>🛍️ Shopee Affiliate Link Generator</h1>
+        <div class="subtitle">Lấy link Shopee bằng cách nhấn vào nút chia sẻ trên ứng dụng Shopee</div>
+        
+        <div class="warning-box">
+            <strong>⚠️ CHỈ hỗ trợ link shopee.vn:</strong><br>
+            • shopee.vn/product/... ✅<br>
+            • shopee.vn/tên-sản-phẩm-i.... ✅<br>
+            • s.shopee.vn/... ❌ KHÔNG hỗ trợ<br>
+            • Các link khác (lazada, tiki, amazon...) ❌ KHÔNG hỗ trợ
+        </div>
+        
+        <div class="info-box">
+            <strong>💡 Cách sử dụng:</strong><br>
+            • Lấy link sản phẩm Shopee và dán vào ô bên dưới<br>
+            • Tool sẽ tạo affiliate link với tracking parameters<br>
+            • Click nút "🛍️ Mở Sản Phẩm" để chia sẻ và mua hàng<br>
+            • Hỗ trợ tất cả loại link shopee.vn: product, named-product
+        </div>
+        
+        <div class="input-group">
+            <label for="inputLinks">📋 Nhập link sản phẩm vào đây</label>
+            <textarea id="inputLinks" rows="3" placeholder="Dán link sản phẩm Shopee vào đây:
+https://shopee.vn/product/1264383914/26138270984"></textarea>
+        </div>
+        
+        <div class="button-group">
+            <button class="btn-convert" onclick="generateAffiliateLinks()">🔄 Tạo Liên Kết</button>
+            <button class="btn-copy" onclick="copyAllResults()">📋 Sao chép</button>
+            <button class="btn-clear" onclick="clearAll()">🗑️ Xóa Hết</button>
+        </div>
+        
+        <div id="resultsSection" class="result-area" style="display: none;">
+            <div class="stats">
+                <span>Tổng liên kết: <span id="totalLinks">0</span></span>
+                <span>Đã tạo: <span id="generatedCount">0</span></span>
+                <span>Lỗi: <span id="errorCount">0</span></span>
+            </div>
+            
+            <div id="generatedLinks"></div>
+        </div>
+        
+        <div id="successMessage" class="success-message">
+            ✅ Đã copy affiliate link thành công!
+        </div>
+        
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+
+    <script>
+        const AFFILIATE_ID = '17309510004';
+        
+        function generateRandomId(length = 8) {
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+        
+        function generateRandomCampaignId() {
+            return 'id_' + generateRandomId(10);
+        }
+        
+        function generateRandomTerm() {
+            return generateRandomId(12);
+        }
+        
+        function generateGadsSignature() {
+            // Tạo gads_t_sig giả lập
+            return 'VTJGc2RHVmtYMTlxTFVSVVRrdENkZmdTUmpMeSszRElEdm91eXFrOVhzNS9BUFZoV3EvdzBSejdLalVDMURHQ1Z6TVI1b3NuSmxLR1IxalhlcDl5OWlnb00vdnZhSUdlRHlaeXRjQXJoTjdNUk94aGhYTVZUbUpZaGR0RVhCM29RUzJDc01rKytHOW41VDNPV3JtQmoyYWtSRjNQSkVDUkk3WnNmZW5lMjNFPQ';
+        }
+        
+        function generateTrackingId() {
+            return generateRandomId(12);
+        }
+        
+        function isValidShopeeLink(url) {
+            // CHỈ chấp nhận link shopee.vn, KHÔNG chấp nhận s.shopee.vn
+            const shopeePatterns = [
+                /^https?:\/\/shopee\.vn\//,
+                /^shopee\.vn\//
+            ];
+            
+            return shopeePatterns.some(pattern => pattern.test(url.toLowerCase()));
+        }
+        
+        function extractProductInfo(url) {
+            // Kiểm tra xem có phải link shopee.vn không (loại bỏ s.shopee.vn)
+            if (!isValidShopeeLink(url)) {
+                return null;
+            }
+            
+            // Đảm bảo URL có protocol
+            let processUrl = url;
+            if (!processUrl.startsWith('http')) {
+                processUrl = 'https://' + processUrl;
+            }
+            
+            // Loại bỏ parameters cũ để lấy base URL
+            const cleanUrl = processUrl.split('?')[0];
+            
+            // Pattern 1: https://shopee.vn/product/shopid/itemid
+            const pattern1 = /shopee\.vn\/product\/(\d+)\/(\d+)/;
+            const match1 = cleanUrl.match(pattern1);
+            if (match1) {
+                return {
+                    shopId: match1[1],
+                    itemId: match1[2],
+                    baseUrl: cleanUrl,
+                    type: 'product'
+                };
+            }
+            
+            // Pattern 2: https://shopee.vn/product-name-i.shopid.itemid
+            const pattern2 = /shopee\.vn\/.*-i\.(\d+)\.(\d+)/;
+            const match2 = cleanUrl.match(pattern2);
+            if (match2) {
+                return {
+                    shopId: match2[1],
+                    itemId: match2[2],
+                    baseUrl: cleanUrl,
+                    type: 'named_product'
+                };
+            }
+            
+            // Pattern 3: Bất kỳ link shopee.vn nào khác
+            if (cleanUrl.includes('shopee.vn/')) {
+                return {
+                    baseUrl: cleanUrl,
+                    type: 'general'
+                };
+            }
+            
+            return null;
+        }
+        
+        function createAffiliateLink(productInfo) {
+            if (!productInfo) return null;
+            
+            // Tạo full tracking parameters cho tất cả link shopee.vn
+            const trackingParams = new URLSearchParams({
+                'gads_t_sig': generateGadsSignature(),
+                'uls_trackid': generateTrackingId(),
+                'utm_campaign': generateRandomCampaignId(),
+                'utm_content': '----',
+                'utm_medium': 'affiliates',
+                'utm_source': `an_${AFFILIATE_ID}`,
+                'utm_term': generateRandomTerm()
+            });
+            
+            return `${productInfo.baseUrl}?${trackingParams.toString()}`;
+        }
+        
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.innerHTML = `<strong>❌ Lỗi:</strong> ${message}`;
+            errorMessage.style.display = 'block';
+            
+            // Ẩn thông báo sau 5 giây
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+        
+        function hideError() {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.style.display = 'none';
+        }
+        
+        function generateAffiliateLinks() {
+            hideError();
+            
+            const input = document.getElementById('inputLinks').value.trim();
+            
+            if (!input) {
+                showError('Vui lòng nhập link sản phẩm Shopee.vn!');
+                return;
+            }
+            
+            // Chỉ lấy link đầu tiên nếu có nhiều link
+            const links = input.split('\n').filter(link => link.trim());
+            const firstLink = links[0].trim();
+            
+            if (links.length > 1) {
+                // Thông báo nếu có nhiều link nhưng chỉ xử lý link đầu
+                const confirmProcess = confirm(`Phát hiện ${links.length} links. Chỉ xử lý link đầu tiên:\n"${firstLink.substring(0, 80)}..."\n\nClick OK để tiếp tục hoặc Cancel để chỉnh sửa.`);
+                if (!confirmProcess) return;
+            }
+            
+            // Kiểm tra xem có phải link shopee.vn không
+            if (!isValidShopeeLink(firstLink)) {
+                showError(`Link này không được hỗ trợ! CHỈ chấp nhận link từ:<br>
+                    • shopee.vn/product/... <br>
+                    • shopee.vn/tên-sản-phẩm-i... <br><br>
+                    <strong>KHÔNG hỗ trợ:</strong><br>
+                    • s.shopee.vn/...<br>
+                    • Các trang khác (lazada, tiki, amazon...)<br><br>
+                    <strong>Link bạn nhập:</strong> ${firstLink.length > 100 ? firstLink.substring(0, 100) + '...' : firstLink}`);
+                return;
+            }
+            
+            const productInfo = extractProductInfo(firstLink);
+            const affiliateLink = createAffiliateLink(productInfo);
+            
+            if (affiliateLink) {
+                const result = {
+                    original: firstLink,
+                    affiliateLink: affiliateLink,
+                    productInfo: productInfo,
+                    status: 'success'
+                };
+                displaySingleResult(result);
+            } else {
+                const result = {
+                    original: firstLink,
+                    affiliateLink: 'Không thể tạo affiliate link cho URL này',
+                    status: 'error'
+                };
+                displaySingleResult(result);
+            }
+        }
+        
+        function displaySingleResult(result) {
+            hideError();
+            
+            const resultsSection = document.getElementById('resultsSection');
+            const generatedLinks = document.getElementById('generatedLinks');
+            
+            // Cập nhật thống kê
+            document.getElementById('totalLinks').textContent = '1';
+            document.getElementById('generatedCount').textContent = result.status === 'success' ? '1' : '0';
+            document.getElementById('errorCount').textContent = result.status === 'success' ? '0' : '1';
+            
+            // Xóa kết quả cũ
+            generatedLinks.innerHTML = '';
+            
+            // Tạo kết quả mới với style đặc biệt cho single link
+            const linkDiv = document.createElement('div');
+            linkDiv.className = 'converted-link';
+            linkDiv.style.borderLeft = result.status === 'success' ? '4px solid #27ae60' : '4px solid #e74c3c';
+            linkDiv.style.textAlign = 'center'; // Center align cho single link
+            
+            if (result.status === 'success') {
+                linkDiv.innerHTML = `
+                    <div style="font-weight: bold; color: #27ae60; margin-bottom: 15px; font-size: 16px;">
+                        ✅ Affiliate Link Đã Sẵn Sàng!
+                    </div>
+                    
+                    <div class="link-original" style="text-align: left;">
+                        <strong>Link gốc:</strong><br>${result.original}
+                    </div>
+                    
+                    <div class="link-container">
+                        <div style="margin-bottom: 15px; color: #333; font-size: 16px; font-weight: bold;">
+                            🚀 Click để mua ngay hoặc copy để chia sẻ:
+                        </div>
+                        <a href="${result.affiliateLink}" target="_blank" class="clickable-link" 
+                           onclick="trackClick(1)" style="font-size: 16px; padding: 15px 30px; margin: 10px;">
+                            🛍️ Mở Sản Phẩm Shopee
+                        </a>
+                        <br>
+                        <button class="btn-copy-single" onclick="copyLink('${result.affiliateLink.replace(/'/g, "\\'")}', 1)" 
+                                style="font-size: 14px; padding: 12px 25px; margin-top: 10px;">
+                            📋 Copy Affiliate Link
+                        </button>
+                        <div style="margin-top: 10px; font-size: 12px; color: #999;">
+                            Link sẽ mở trong tab mới với tracking đầy đủ
+                        </div>
+                    </div>
+                    
+                    <details style="margin-top: 20px; text-align: left;">
+                        <summary style="cursor: pointer; color: #666; font-size: 12px; margin-bottom: 10px;">
+                            📋 Xem link đầy đủ và tracking info
+                        </summary>
+                        <div class="link-generated">
+                            <strong>🔗 Affiliate Link đầy đủ:</strong><br>
+                            <div style="word-break: break-all; margin-top: 5px; font-size: 11px;">
+                                ${result.affiliateLink}
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px; font-size: 11px; color: #666;">
+                            <strong>📊 Tracking Info:</strong><br>
+                            • Type: ${result.productInfo.type}<br>
+                        </div>
+                    </details>
+                `;
+            } else {
+                linkDiv.innerHTML = `
+                    <div style="font-weight: bold; color: #e74c3c; margin-bottom: 15px; font-size: 16px;">
+                        ❌ Không thể tạo link
+                    </div>
+                    <div class="link-original" style="text-align: left;">
+                        <strong>Link gốc:</strong><br>${result.original}
+                    </div>
+                    <div style="color: #e74c3c; font-weight: bold; margin-top: 15px; font-size: 14px;">
+                        ${result.affiliateLink}
+                    </div>
+                `;
+            }
+            
+            generatedLinks.appendChild(linkDiv);
+            resultsSection.style.display = 'block';
+        }
+        
+        function copyAllResults() {
+            // Với single link mode, chỉ copy link hiện tại
+            const linkDiv = document.querySelector('.converted-link .link-generated div');
+            if (!linkDiv) {
+                showError('Chưa có affiliate link nào để copy!');
+                return;
+            }
+            
+            const linkText = linkDiv.textContent.trim();
+            if (linkText && linkText.startsWith('https://')) {
+                navigator.clipboard.writeText(linkText).then(() => {
+                    showSuccessMessage();
+                }).catch(() => {
+                    // Fallback
+                    const textArea = document.createElement('textarea');
+                    textArea.value = linkText;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showSuccessMessage();
+                });
+            } else {
+                showError('Không có affiliate link để copy!');
+            }
+        }
+        
+        function copyLink(link, index) {
+            navigator.clipboard.writeText(link).then(() => {
+                // Hiển thị thông báo thành công tạm thời
+                const button = event.target;
+                const originalText = button.innerHTML;
+                button.innerHTML = '✅ Đã copy!';
+                button.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '#17a2b8';
+                }, 2000);
+            }).catch(() => {
+                showError('Không thể copy link. Vui lòng copy thủ công.');
+            });
+        }
+        
+        function trackClick(index) {
+            console.log(`Clicked on affiliate link ${index} at ${new Date().toLocaleString()}`);
+            // Có thể thêm analytics tracking ở đây nếu cần
+        }
+        
+        function showSuccessMessage() {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        }
+        
+        function clearAll() {
+            document.getElementById('inputLinks').value = '';
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+            hideError();
+        }
+        
+        // Keyboard shortcut
+        document.getElementById('inputLinks').addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                generateAffiliateLinks();
+            }
+        });
+        
+        // Auto focus on input
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('inputLinks').focus();
+        });
+        
+        // Kiểm tra link khi người dùng nhập
+        document.getElementById('inputLinks').addEventListener('input', function() {
+            hideError();
+        });
+    </script>
+</body>
+</html>

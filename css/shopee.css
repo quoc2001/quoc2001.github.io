@@ -10,10 +10,10 @@ body {
 .back-button {
     position: fixed;
     top: 20px;
-    left: 15px;
+    left: 10px;
     background: rgba(255, 255, 255, 0.9);
     color: #333;
-    padding: 8px 12px;
+    padding: 8px 16px;
     border: none;
     border-radius: 20px;
     cursor: pointer;

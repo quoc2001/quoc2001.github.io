@@ -25,6 +25,22 @@
         <div class="controls">
             <span class="music-toggle" id="musicToggle"></span>
         </div>
+
+        <!-- Hộp thoại mời đi chơi -->
+        <div id="invitation-modal">
+            <div class="invitation-box">
+                <div class="invitation-title">💫 Lời Mời Đặc Biệt 💫</div>
+                <div class="invitation-message">
+                    Trung thu rồi mà chưa rủ em đi chơi được<br>
+                    Cuối tuần này đi chơi anh không bé?✨
+                </div>
+                <div class="invitation-buttons">
+                    <button class="invitation-btn btn-yes" id="btn-yes">Được nha! 💕</button>
+                    <button class="invitation-btn btn-no" id="btn-no">Để em nghĩ...</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <audio id="bg-music" loop>
@@ -194,6 +210,51 @@
         });
 
         for (let i = 0; i < 4; i++) { setTimeout(createLantern, i * 600); }
+
+        // Xử lý hộp thoại mời đi chơi
+        const invitationModal = document.getElementById('invitation-modal');
+        const btnYes = document.getElementById('btn-yes');
+        const btnNo = document.getElementById('btn-no');
+
+        // Hiển thị hộp thoại sau 3 giây
+        setTimeout(() => {
+            invitationModal.classList.add('show');
+        }, 3000);
+
+        // 
+        
+        // Thêm e.stopPropagation() và setTimeout
+        btnYes.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            invitationModal.classList.remove('show');
+            
+            setTimeout(() => { 
+                const wishPopup = document.getElementById('wish-popup');
+                wishPopup.textContent = "Yeyyy! Anh vui quá! 💕✨🎉";
+                wishPopup.style.display = 'block';
+                wishPopup.style.zIndex = '99999';
+                
+                setTimeout(() => {
+                    wishPopup.style.display = 'none';
+                }, 4000);
+            }, 400); 
+        });
+
+        btnNo.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            invitationModal.classList.remove('show');
+            
+            setTimeout(() => { 
+                const wishPopup = document.getElementById('wish-popup');
+                wishPopup.textContent = "Không sao, anh sẽ đợi em... 🥺";
+                wishPopup.style.display = 'block';
+                wishPopup.style.zIndex = '99999';
+                
+                setTimeout(() => {
+                    wishPopup.style.display = 'none';
+                }, 3000);
+            }, 400); 
+        });
 
     </script>
 </body>

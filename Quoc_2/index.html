@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MainPage</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="shortcut icon" href="./images/1.png" type="image/x-icon" />
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Page Management</h1>
+            <div class="subtitle">
+                The home page is used to manage all of Quoc's pages more easily.<br />
+                No malicious, fraudulent content.
+            </div>
+        </header>
+
+        <div class="toolbar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Searching...">
+            </div>
+        </div>
+
+        <div id="pageGrid" class="page-grid">
+            <!-- Pages will be rendered here -->
+        </div>
+
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-icon">📄</div>
+            <div class="empty-title">Nothing found</div>
+            <div class="empty-description">Please make sure your search terms are correct.</div>
+        </div>
+    </div>
+
+    <script>
+        let pages = [
+            {
+                id: 1,
+                title: "My Portfolio",
+                url: "./portfolio.html",
+                description: "This page introduces about myself.",
+                createdAt: "2025-July-15"
+            },
+            {
+                id: 2,
+                title: "Commission Calculator",
+                url: "./calculator.html",
+                description: "This page automatically calculates commissions from Shopee Affiliate.",
+                createdAt: "2025-July-15"
+            },
+            {
+                id: 3,
+                title: "Happy Women's Day",
+                url: "./womenday.html",
+                description: "Open your large screen to get better animation and wait 3 seconds after clicking",
+                createdAt: "2024-October-18"
+            },
+
+            {
+                id: 4,
+                title: "Mid-Autumn Festival",
+                url: "./trungthu.html",
+                description: "Mid-Autumn Festival",
+                createdAt: "2025-October-06"
+            },
+            // {
+            //     id: 4,
+            //     title: "",
+            //     url: "",
+            //     description: ".",
+            //     createdAt: ""
+            // },
+            // {
+            //     id: 5,
+            //     title: "Blog",
+            //     url: "",
+            //     description: "",
+            //     createdAt: ""
+            // }
+        ];
+
+        function renderPages(pagesToRender = pages) {
+            const pageGrid = document.getElementById('pageGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            if (pagesToRender.length === 0) {
+                pageGrid.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+
+            pageGrid.innerHTML = pagesToRender.map(page => `
+                <div class="page-card" onclick="openPage('${page.url}')">
+                    <div class="page-header">
+                        <div>
+                            <div class="page-title">${page.title}</div>
+                            <a href="${page.url}" class="page-url" onclick="event.stopPropagation()">${page.url}</a>
+                        </div>
+                    </div>
+                    <div class="page-description">${page.description}</div>
+                    <div class="page-meta">
+                        <div class="page-date">
+                            📅 ${formatDate(page.createdAt)}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('vi-VN');
+        }
+
+        function openPage(url) {
+            if (url.startsWith('./') || url.startsWith('../')) {
+                // Local file
+                window.location.href = url;
+            } else if (url.startsWith('http')) {
+                // External URL
+                window.location.href = url;
+            } else {
+                // Assume local file
+                window.location.href = './' + url;
+            }
+        }
+
+
+        function openModal() {
+            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('pageForm').reset();
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function searchPages(query) {
+            const filtered = pages.filter(page =>
+                page.title.toLowerCase().includes(query.toLowerCase()) ||
+                page.description.toLowerCase().includes(query.toLowerCase()) ||
+                page.url.toLowerCase().includes(query.toLowerCase())
+            );
+            renderPages(filtered);
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchPages(e.target.value);
+        });
+
+        // Initial render
+        renderPages();
+    </script>
+</body>
+
+</html>

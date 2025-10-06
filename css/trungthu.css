@@ -1,0 +1,152 @@
+:root {
+    --accent: #ff7f50;
+    --accent-2: #ff5722;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: Inter, "Segoe UI", system-ui, sans-serif;
+    background: #060614;
+}
+
+.stage {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+canvas#starfield {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.moon {
+    position: fixed;
+    top: 40px;
+    right: 60px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle at 30% 30%, #fff 0%, #f0f0f0 45%, #dcdcdc 100%);
+    border-radius: 50%;
+    box-shadow:
+        0 0 30px rgba(255, 255, 210, 0.8),
+        0 0 60px rgba(255, 240, 200, 0.5);
+    pointer-events: none;
+    z-index: 2;
+}
+
+#lantern-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.lantern {
+    position: absolute;
+    pointer-events: auto;
+    width: 40px;
+    user-select: none;
+}
+
+@keyframes swing {
+    0% {
+        transform: rotate(-5deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+
+    100% {
+        transform: rotate(-5deg);
+    }
+}
+
+.swing {
+    animation: swing 2s ease-in-out infinite;
+}
+
+#wish-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.96);
+    color: var(--accent-2);
+    font-family: Inter, "Segoe UI", system-ui, sans-serif;
+    padding: 28px 20px;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: none;
+    z-index: 9999;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    max-width: 90%;
+    box-sizing: border-box;
+}
+
+#hint {
+    position: fixed;
+    bottom: 8vh;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 14px;
+    background: linear-gradient(90deg, rgba(255, 127, 80, 0.95), rgba(255, 87, 34, 0.95));
+    color: white;
+    border-radius: 999px;
+    font-weight: 600;
+    z-index: 9998;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity .35s ease;
+    pointer-events: none;
+    white-space: pre-line;
+}
+
+.controls {
+    position: fixed;
+    left: 18px;
+    top: 18px;
+    z-index: 10;
+    color: #fff;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+.music-toggle {
+    cursor: pointer;
+    margin-left: 10px;
+    color: #fff;
+    opacity: 0.95;
+}
+
+@media (max-width:600px) {
+    .moon {
+        top: 14px;
+        right: 14px;
+        width: 70px;
+        height: 70px;
+        box-shadow: 0 0 12px rgba(255, 240, 200, 0.6);
+    }
+
+    #wish-popup {
+        font-size: 0.95rem;
+        padding: 16px 12px;
+    }
+
+    #hint {
+        font-size: 0.9rem;
+        bottom: 12vh;
+    }
+}

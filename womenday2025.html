@@ -75,7 +75,7 @@
             setTimeout(() => flower.remove(), 5000);
         }
 
-        setInterval(createFlower, 800);
+        setInterval(createFlower, flowerInterval);
 
         function createHeart() {
             const heart = document.createElement('div');
@@ -88,7 +88,7 @@
             setTimeout(() => heart.remove(), 5000);
         }
 
-        setInterval(createHeart, 1500);
+        setInterval(createHeart, heartInterval);
 
         function createEffects(x, y) {
             let centerX = x;
@@ -158,7 +158,7 @@
             const randomX = window.innerWidth * (0.1 + Math.random() * 0.8);
             const randomY = window.innerHeight * (0.1 + Math.random() * 0.6);
             createEffects(randomX, randomY);
-        }, 2000);
+        }, autoFireworkInterval);
 
         // // Hiển thị modal sau 3 giây
         // setTimeout(() => {
@@ -217,5 +217,4 @@
         });
     </script>
 </body>
-
 </html>

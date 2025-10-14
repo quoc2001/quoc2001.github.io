@@ -1,0 +1,540 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #ff6b9d, #c44569, #f8b195, #f67280);
+    background-size: 400% 400%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    animation: oceanWave 15s ease infinite;
+}
+
+@keyframes oceanWave {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    25% {
+        background-position: 50% 25%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    75% {
+        background-position: 50% 75%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-main {
+    /* font-size: 3.5em;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    animation: slideIn 1s ease-out, glow 3s ease-in-out infinite; */
+    font-size: 3.8em;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    animation: slideIn 1s ease-out, glow 3s ease-in-out infinite;
+    font-family: 'Dancing Script', cursive;
+    letter-spacing: 2px;
+}
+
+@keyframes glow {
+
+    0%,
+    100% {
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    50% {
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 255, 255, 0.5);
+    }
+}
+
+.text-sub {
+    font-size: 1.8em;
+    font-family: 'Amatic SC', cursive;
+    color: #ffd700;
+    margin-bottom: 40px;
+    animation: fadeIn 1.5s ease-out, softGlow 2.5s ease-in-out infinite;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+@keyframes softGlow {
+
+    0%,
+    100% {
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    50% {
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.6);
+    }
+}
+
+.text-bottom {
+    font-size: 1.3em;
+    font-family: 'Great Vibes', cursive;
+    color: white;
+    line-height: 1.8;
+    animation: fadeIn 2s ease-out;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .text-main {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+
+    .text-sub {
+        font-size: 1.4em;
+        margin-bottom: 40px;
+    }
+
+    .text-bottom {
+        font-size: 1em;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .text-main {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+
+    .text-sub {
+        font-size: 1.1em;
+        margin-bottom: 20px;
+    }
+
+    .text-bottom {
+        font-size: 0.9em;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+}
+
+.flowers-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.flower {
+    position: absolute;
+    font-size: 3em;
+    animation: float 4s ease-in-out infinite;
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .flower {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .flower {
+        font-size: 1.8em;
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translateY(-30px) rotate(10deg);
+        opacity: 0.9;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.heart {
+    position: absolute;
+    animation: heartFloat 3s ease-in-out infinite;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .heart {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .heart {
+        font-size: 0.9em;
+    }
+}
+
+@keyframes heartFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0);
+    }
+
+    10% {
+        opacity: 0.8;
+        transform: translateY(100vh) scale(1);
+    }
+
+    90% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-100vh) scale(1);
+    }
+}
+
+.button {
+    margin-top: 80px;
+    padding: 15px 40px;
+    font-size: 1.1em;
+    font-family: 'IBM Plex Mono', monospace;
+    background-color: #ffd700;
+    color: #764ba2;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.4);
+    background-color: #ffed4e;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .button {
+        margin-top: 80px;
+        padding: 12px 30px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    .button {
+        margin-top: 80px;
+        padding: 10px 25px;
+        font-size: 0.85em;
+    }
+}
+
+.sparkle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background-color: white;
+    border-radius: 50%;
+    animation: sparkleAnim 1.5s ease-out forwards;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+}
+
+@keyframes sparkleAnim {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(0);
+    }
+}
+
+.particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: particleFloat 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes particleFloat {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(0);
+    }
+}
+
+.confetti {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    animation: confettiFall 2.5s ease-in forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) rotateZ(0deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) rotateZ(360deg);
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.5s ease;
+}
+
+.password-modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.password-modal-content {
+    background-color: white;
+    padding: 50px 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.4);
+    animation: slideUp 0.5s ease;
+    max-width: 350px;
+}
+
+.password-modal-title {
+    font-size: 1.5em;
+    color: #764ba2;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+.password-input {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1.0em;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.password-input:focus {
+    outline: none;
+    border-color: #764ba2;
+}
+
+.password-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.0em;
+    background-color: #ff1493;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.password-btn:hover {
+    background-color: #ff69b4;
+    transform: scale(1.02);
+}
+
+.password-error {
+    color: #ff1493;
+    font-size: 0.9em;
+    margin-top: 10px;
+    display: none;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.5s ease;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-title {
+    font-size: 1.8em;
+    color: #764ba2;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.modal-text {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.modal-btn {
+    padding: 12px 30px;
+    font-size: 1em;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-yes {
+    background-color: #ff1493;
+    color: white;
+}
+
+.btn-yes:hover {
+    background-color: #ff69b4;
+    transform: scale(1.05);
+}
+
+.btn-no {
+    background-color: #ddd;
+    color: #333;
+}
+
+.btn-no:hover {
+    background-color: #bbb;
+    transform: scale(1.05);
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        margin: 30% auto;
+        padding: 30px 20px;
+    }
+
+    .modal-title {
+        font-size: 1.4em;
+    }
+
+    .modal-text {
+        font-size: 1em;
+    }
+}

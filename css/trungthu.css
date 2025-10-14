@@ -187,6 +187,7 @@ canvas#starfield {
     text-align: center;
     max-width: 90%;
     box-sizing: border-box;
+    z-index: 99999;
 }
 
 
@@ -245,5 +246,4 @@ canvas#starfield {
         font-size: 0.9rem;
         bottom: 12vh;
     }
-
 }

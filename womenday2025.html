@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Dancing+Script:wght@700&display=swap"
+        rel="stylesheet">
     <title>Happy Women's Day 20/10</title>
     <link rel="stylesheet" href="css/womenday2025.css">
 </head>
+
 <body>
     <div class="flowers-container" id="flowersContainer"></div>
+
+    <!-- Audio element cho nhạc nền -->
+    <audio id="backgroundMusic" loop>
+        <source src="music/womenday.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <div id="passwordModal" class="password-modal">
         <div class="password-modal-content">
             <div class="password-modal-title">🔐 Nhập Mật Khẩu 🔐</div>
-            <input 
-                type="password" 
-                id="passwordInput" 
-                class="password-input" 
-                placeholder="Nhập mật khẩu để vào"
-                onkeypress="handlePasswordKeyPress(event)"
-            >
+            <input type="password" id="passwordInput" class="password-input" placeholder="Nhập mật khẩu để vào"
+                onkeypress="handlePasswordKeyPress(event)">
             <button class="password-btn" onclick="checkPassword()">Vào Trang</button>
             <div class="password-error" id="passwordError">Mật khẩu sai! Thử lại nhé 😊</div>
         </div>
@@ -57,7 +62,7 @@
         // Điều chỉnh số lượng và tần suất hiệu ứng theo kích thước màn hình
         const isMobile = window.innerWidth <= 768;
         const isSmallMobile = window.innerWidth <= 480;
-        
+
         const flowerInterval = isSmallMobile ? 2000 : (isMobile ? 1500 : 1000);
         const heartInterval = isSmallMobile ? 3000 : (isMobile ? 2000 : 1200);
         const autoFireworkInterval = isSmallMobile ? 4000 : (isMobile ? 3000 : 2500);
@@ -186,12 +191,18 @@
         function checkPassword() {
             const input = document.getElementById('passwordInput').value;
             const errorMsg = document.getElementById('passwordError');
-            
+
             if (input === PASSWORD) {
                 document.getElementById('passwordModal').style.display = 'none';
                 document.getElementById('mainContent').style.display = 'flex';
                 document.getElementById('passwordInput').value = '';
-                
+
+                // Phát nhạc nền
+                const music = document.getElementById('backgroundMusic');
+                music.play().catch(err => {
+                    console.log('Không thể tự động phát nhạc:', err);
+                });
+
                 // Hiển thị hộp thoại lời mời sau 3 giây
                 setTimeout(() => {
                     document.getElementById('inviteModal').style.display = 'block';
@@ -217,4 +228,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -14,7 +14,7 @@ body {
     font-family: 'Arial', sans-serif;
     overflow: hidden;
     animation: oceanWave 15s ease infinite;
-    position: fixed;
+    /* position: fixed; */
 }
 
 @keyframes oceanWave {

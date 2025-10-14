@@ -31,7 +31,7 @@
             <div class="invitation-box">
                 <div class="invitation-title">💫 Lời Mời Đặc Biệt 💫</div>
                 <div class="invitation-message">
-                    Trung thu rồi mà chưa rủ Nhi đi chơi được nữa<br>
+                    Trung thu rồi mà chưa rủ em đi chơi được<br>
                     Cuối tuần này đi chơi anh không bé?✨
                 </div>
                 <div class="invitation-buttons">
@@ -197,10 +197,20 @@
             else { bg.pause(); musicToggle.textContent = '🔈'; }
         });
 
-        document.addEventListener('pointerdown', function onceStart() {
-            startMusic();
-            document.removeEventListener('pointerdown', onceStart);
-        });
+        // document.addEventListener('pointerdown', function onceStart() {
+        //     startMusic();
+        //     document.removeEventListener('pointerdown', onceStart);
+        // });
+        // Phát nhạc khi có bất kỳ tương tác nào (click, touch)
+        function tryStartMusic() {
+            if (!musicStarted) {
+                startMusic();
+            }
+        }
+
+        document.addEventListener('click', tryStartMusic);
+        document.addEventListener('touchstart', tryStartMusic);
+        document.addEventListener('pointerdown', tryStartMusic);
 
         document.addEventListener('click', (e) => {
             const pop = document.getElementById('wish-popup');
@@ -222,43 +232,41 @@
         }, 3000);
 
         // 
-        
+
         // Thêm e.stopPropagation() và setTimeout
         btnYes.addEventListener('click', (e) => {
-            e.stopPropagation(); 
+            e.stopPropagation();
             invitationModal.classList.remove('show');
-            
-            setTimeout(() => { 
+
+            setTimeout(() => {
                 const wishPopup = document.getElementById('wish-popup');
                 wishPopup.textContent = "Yeyyy! Anh vui quá! 💕✨🎉";
                 wishPopup.style.display = 'block';
                 wishPopup.style.zIndex = '99999';
-                
+
                 setTimeout(() => {
                     wishPopup.style.display = 'none';
                 }, 4000);
-            }, 400); 
+            }, 400);
         });
 
         btnNo.addEventListener('click', (e) => {
-            e.stopPropagation(); 
+            e.stopPropagation();
             invitationModal.classList.remove('show');
-            
-            setTimeout(() => { 
+
+            setTimeout(() => {
                 const wishPopup = document.getElementById('wish-popup');
                 wishPopup.textContent = "Không sao, anh sẽ đợi em... 🥺";
                 wishPopup.style.display = 'block';
                 wishPopup.style.zIndex = '99999';
-                
+
                 setTimeout(() => {
                     wishPopup.style.display = 'none';
                 }, 3000);
-            }, 400); 
+            }, 400);
         });
 
     </script>
 </body>
 
-
 </html>
-

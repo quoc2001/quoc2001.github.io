@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Dancing+Script:wght@700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Great+Vibes&display=swap&subset=vietnamese"
+        rel="stylesheet">
+    <title>Happy Women's Day 20/10</title>
+    <link rel="stylesheet" href="css/womenday2025.css">
+</head>
+
+<body>
+    <div class="flowers-container" id="flowersContainer"></div>
+
+    <!-- Audio element cho nhạc nền -->
+    <audio id="backgroundMusic" loop>
+        <source src="music/womenday.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="passwordModal" class="password-modal">
+        <div class="password-modal-content">
+            <div class="password-modal-title">🔐 Nhập Mật Khẩu 🔐</div>
+            <input type="password" id="passwordInput" class="password-input" placeholder="Nhập mật khẩu để vào"
+                onkeypress="handlePasswordKeyPress(event)">
+            <button class="password-btn" onclick="checkPassword()">Vào Trang</button>
+            <div class="password-error" id="passwordError">Mật khẩu sai! Thử lại nhé 😊</div>
+        </div>
+    </div>
+
+    <div id="mainContent" class="container">
+        <div class="text-main">🎉 Chúc Mừng 20/10 🎉</div>
+        <div class="text-sub">Ngày Phụ Nữ Việt Nam</div>
+        <div class="text-bottom">
+            Gửi đến em những lời chúc tốt đẹp<br>
+            Chúc em ngày 20/10 nhẹ nhàng, vui vẻ,<br>
+            và luôn cười tươi như mọi ngày 🌸<br>
+        </div>
+        <button class="button" onclick="handleButtonClick()">✨ Nhấn Để Tạo Pháo Hoa ✨</button>
+    </div>
+
+    <!-- <div id="inviteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">🎉 Lời Mời 🎉</div>
+            <div class="modal-text">
+                Sắp tới là ngày 20/10 đó!<br>
+                Cuối tuần này Nhi đi chơi với anh nhé 😊
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn btn-yes" onclick="handleYes()">Vâng, em đồng ý ❤️</button>
+                <button class="modal-btn btn-no" onclick="handleNo()">Để em suy nghĩ nha 😄</button>
+            </div>
+        </div>
+    </div> -->
+
+    <div id="inviteModal" class="modal">
+        <div class="modal-content modal-form">
+            <div class="modal-header">
+                <div class="modal-title">🎉 Lời Mời Đặc Biệt 🎉</div>
+                <button class="close-btn-bottom" onclick="closeModal()">✕</button>
+            </div>
+            <div class="form-container">
+                <!-- <iframe 
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSdMA5TJKJuTIH_7TSyVdY7z3aw9yDzNX7tZa1pQurbIu29yZA/viewform?usp=header" 
+                    width="100%" 
+                    height="500" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0">
+                    Đang tải...
+                </iframe> -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const flowers = ['🌹', '🌺', '🌸', '🌼', '💐'];
+        const container = document.getElementById('flowersContainer');
+        const PASSWORD = 'Nhidepgai';
+
+        // Điều chỉnh số lượng và tần suất hiệu ứng theo kích thước màn hình
+        const isMobile = window.innerWidth <= 768;
+        const isSmallMobile = window.innerWidth <= 480;
+
+        const flowerInterval = isSmallMobile ? 1600 : (isMobile ? 1200 : 800);
+        const heartInterval = isSmallMobile ? 2500 : (isMobile ? 2000 : 1200);
+        const autoFireworkInterval = isSmallMobile ? 2000 : (isMobile ? 1500 : 1000);
+
+        function createFlower() {
+            const flower = document.createElement('div');
+            flower.classList.add('flower');
+            flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+            flower.style.left = Math.random() * 100 + '%';
+            flower.style.top = Math.random() * 100 + '%';
+            flower.style.animationDelay = Math.random() * 2 + 's';
+            flower.style.animationDuration = (3 + Math.random() * 2) + 's';
+            container.appendChild(flower);
+
+            setTimeout(() => flower.remove(), 5000);
+        }
+
+        setInterval(createFlower, flowerInterval);
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.textContent = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+            container.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        setInterval(createHeart, heartInterval);
+
+        function createEffects(x, y) {
+            let centerX = x;
+            let centerY = y;
+
+            const colors = ['#ffd700', '#ff69b4', '#00ffff', '#ff1493'];
+
+            // Sparkles
+            for (let i = 0; i < 35; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                const angle = (i / 35) * Math.PI * 2;
+                const distance = 100 + Math.random() * 60;
+                sparkle.style.left = centerX + 'px';
+                sparkle.style.top = centerY + 'px';
+                sparkle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                sparkle.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                container.appendChild(sparkle);
+
+                setTimeout(() => sparkle.remove(), 1500);
+            }
+
+            // Particles
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 80 + Math.random() * 120;
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                particle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                particle.style.setProperty('--ty', Math.sin(angle) * distance - 100 + 'px');
+                particle.style.boxShadow = `0 0 12px ${particle.style.background}`;
+                container.appendChild(particle);
+
+                setTimeout(() => particle.remove(), 2000);
+            }
+
+            // Confetti
+            for (let i = 0; i < 25; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 60 + Math.random() * 100;
+                confetti.style.left = centerX + 'px';
+                confetti.style.top = centerY + 'px';
+                confetti.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                confetti.style.setProperty('--ty', Math.sin(angle) * distance - 80 + 'px');
+                container.appendChild(confetti);
+
+                setTimeout(() => confetti.remove(), 2500);
+            }
+        }
+
+        function handleButtonClick() {
+            const button = event.target;
+            const rect = button.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            createEffects(centerX, centerY);
+        }
+
+        // Pháo hoa tự nổ
+        setInterval(() => {
+            const randomX = window.innerWidth * (0.1 + Math.random() * 0.8);
+            const randomY = window.innerHeight * (0.1 + Math.random() * 0.6);
+            createEffects(randomX, randomY);
+        }, autoFireworkInterval);
+
+        function closeModal() {
+            document.getElementById('inviteModal').style.display = 'none';
+            // Nổ pháo hoa khi đóng
+            const celebrateCount = isSmallMobile ? 5 : 8;
+            for (let i = 0; i < celebrateCount; i++) {
+                setTimeout(() => {
+                    const randomX = window.innerWidth * (0.1 + Math.random() * 0.8);
+                    const randomY = window.innerHeight * (0.1 + Math.random() * 0.6);
+                    createEffects(randomX, randomY);
+                }, i * 300);
+            }
+        }
+
+        // // Hiển thị modal sau 3 giây
+        // setTimeout(() => {
+        //     document.getElementById('inviteModal').style.display = 'block';
+        // }, 3000);
+
+        function handleYes() {
+            alert('Quá tuyệt vời! Cảm ơn em nhé 💕');
+            document.getElementById('inviteModal').style.display = 'none';
+            // Nổ pháo hoa celebrate
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const randomX = window.innerWidth * (0.1 + Math.random() * 0.8);
+                    const randomY = window.innerHeight * (0.1 + Math.random() * 0.6);
+                    createEffects(randomX, randomY);
+                }, i * 300);
+            }
+        }
+
+        function handleNo() {
+            alert('Oke bé, anh sẽ đợi nè 😊');
+            document.getElementById('inviteModal').style.display = 'none';
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('passwordError');
+
+            if (input === PASSWORD) {
+                document.getElementById('passwordModal').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'flex';
+                document.getElementById('passwordInput').value = '';
+
+                // Phát nhạc nền
+                const music = document.getElementById('backgroundMusic');
+                music.play().catch(err => {
+                    console.log('Không thể tự động phát nhạc:', err);
+                });
+
+                // Hiển thị hộp thoại lời mời sau 3 giây
+                setTimeout(() => {
+                    document.getElementById('inviteModal').style.display = 'block';
+                }, 3000);
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        function handlePasswordKeyPress(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        }
+
+        // Ẩn trang chính ban đầu
+        window.addEventListener('load', () => {
+            document.getElementById('mainContent').style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>
